@@ -4,6 +4,16 @@
 import tensorflow as tf
 print(f"Using tensorflow v.{tf.__version__}")
 
+# Define epoch accuracy callback
+class epochCallback(tf.keras.callbacks.Callback):
+    def on_epoch_end(self, epoch, logs = {}):
+        if(logs.get("accuracy") > 0.95):
+            epoch_acc = logs.get("accuracy")
+            print(f"\n\nCurrent epoch accuracy is {epoch_acc}. Cancelling training.\n")
+            self.model.stop_training = True
+
+callbacks = epochCallback()
+
 # Get fashion_mnist data
 fashion_mnist = tf.keras.datasets.fashion_mnist
 (training_images, training_labels), (test_images, test_labels) = fashion_mnist.load_data()
@@ -23,8 +33,9 @@ model = tf.keras.Sequential([
 model.compile(loss = "sparse_categorical_crossentropy", optimizer = "adam", metrics = ["accuracy"])
 
 # Fit the model
-model.fit(training_images, training_labels, epochs = 5)
+model.fit(training_images, training_labels, epochs = 5, callbacks = [callbacks])
 
 # Evaluate the model
 model.evaluate(test_images, test_labels)
 
+7
