@@ -22,15 +22,26 @@ fashion_mnist = tf.keras.datasets.fashion_mnist
 training_images = training_images / 255.0
 test_images = test_images / 255.0
 
+# Reshape images
+training_images = training_images.reshape(60000, 28, 28, 1)
+test_images = test_images.reshape(10000, 28, 28, 1)
+
 # Define the model
 model = tf.keras.Sequential([
+            tf.keras.layers.Conv2D(64, (3, 3), activation = "relu", input_shape = (28, 28, 1)),
+            tf.keras.layers.MaxPooling2D(2, 2),
+            tf.keras.layers.Conv2D(64, (3, 3), activation = "relu"),
+            tf.keras.layers.MaxPooling2D(2, 2),
             tf.keras.layers.Flatten(),
-            tf.keras.layers.Dense(1024, activation = tf.nn.relu),
-            tf.keras.layers.Dense(10, activation = tf.nn.softmax)
+            tf.keras.layers.Dense(128, activation = "relu"),
+            tf.keras.layers.Dense(10, activation = "softmax")
         ])
 
 # Compile the model
 model.compile(loss = "sparse_categorical_crossentropy", optimizer = "adam", metrics = ["accuracy"])
+
+# Model summary
+model.summary()
 
 # Fit the model
 model.fit(training_images, training_labels, epochs = 5, callbacks = [callbacks])
