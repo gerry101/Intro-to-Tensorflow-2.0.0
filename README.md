@@ -1,5 +1,5 @@
 # Intro-to-Tensorflow-2.0.0
-Introductory Projects to Tensorflow 2.x and Data Preprocessing in Python
+Introductory Projects to Tensorflow 2.x and Data Preprocessing in Python.
 
 ### Projects
 Projects presented in increasing complexity
@@ -19,6 +19,7 @@ Projects presented in increasing complexity
     - Makes use of Tensorflow's ```ImageDataGenerator``` so as to simplify image data preprocessing.
     - Implements image augmentation on the test dataset so as ti increase the variation of image styles that the model is trained on.
     - Implements the Keras ```Dropout``` layer so as to prevent overfitting while potentially increasing both training and validation accuracies.
+    - Uses the ```RMSprop``` optimizer so as to have maximum control over the model's learning rate.
     # 
   
   
